@@ -309,7 +309,7 @@ class HomeViewModelTest {
         // Then
         viewModel.uiState.test {
             val state = awaitItem()
-            assertTrue(state.lastRefreshTime > 0)
+            assertTrue(state.lastRefreshTime ?: 0 > 0)
         }
     }
 
@@ -317,26 +317,23 @@ class HomeViewModelTest {
         return Place(
             id = "test-place",
             name = "Test City",
-            country = "Test Country",
-            latitude = 40.7128,
-            longitude = -74.0060
+            lat = 40.7128,
+            lon = -74.0060
         )
     }
 
     private fun createTestWeatherBundle(): WeatherBundle {
         return WeatherBundle(
             place = createTestPlace(),
-            current = WeatherNow(
-                temperature = 20.0,
-                feelsLike = 22.0,
+            now = WeatherNow(
+                tempC = 20.0,
+                tempF = 68.0,
+                condition = "Clear sky",
+                icon = "01d",
                 humidity = 65,
-                pressure = 1013,
-                visibility = 10000,
-                uvIndex = 5,
-                windSpeed = 10.0,
-                windDirection = 180,
-                description = "Clear sky",
-                icon = "01d"
+                windKph = 10.0,
+                feelsLikeC = 22.0,
+                dt = System.currentTimeMillis() / 1000
             ),
             hourly = emptyList(),
             daily = emptyList()

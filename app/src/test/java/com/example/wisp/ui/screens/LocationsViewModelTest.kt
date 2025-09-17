@@ -362,9 +362,8 @@ class LocationsViewModelTest {
         return Place(
             id = id,
             name = "Test City $id",
-            country = "Test Country",
-            latitude = 40.7128,
-            longitude = -74.0060
+            lat = 40.7128,
+            lon = -74.0060
         )
     }
 }

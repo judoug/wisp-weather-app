@@ -3,7 +3,6 @@
     <!-- Production Configuration -->
     
     <!-- App Information -->
-    <string name="app_name">Wisp Weather</string>
     <string name="app_description">Beautiful weather app with accurate forecasts and intuitive design</string>
     <string name="app_version">1.0.0</string>
     

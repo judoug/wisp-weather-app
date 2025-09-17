@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -5,10 +8,10 @@ plugins {
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.kapt)
     
-    // Production plugins
-    alias(libs.plugins.google.services)
-    alias(libs.plugins.firebase.crashlytics)
-    alias(libs.plugins.firebase.perf)
+    // Production plugins (commented out for basic build)
+    // alias(libs.plugins.google.services)
+    // alias(libs.plugins.firebase.crashlytics)
+    // alias(libs.plugins.firebase.perf)
 }
 
 android {
@@ -30,6 +33,22 @@ android {
         buildConfigField("String", "OPENWEATHER_API_KEY", "\"${project.findProperty("OPENWEATHER_API_KEY") ?: ""}\"")
     }
 
+    signingConfigs {
+        create("release") {
+            // Signing configuration will be loaded from keystore.properties
+            val keystorePropertiesFile = rootProject.file("keystore.properties")
+            if (keystorePropertiesFile.exists()) {
+                val keystoreProperties = Properties()
+                keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+                
+                keyAlias = keystoreProperties["keyAlias"] as String
+                keyPassword = keystoreProperties["keyPassword"] as String
+                storeFile = file(keystoreProperties["storeFile"] as String)
+                storePassword = keystoreProperties["storePassword"] as String
+            }
+        }
+    }
+    
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
@@ -42,7 +61,7 @@ android {
         
         release {
             isMinifyEnabled = true
-            isShrinkResources = true
+            isShrinkResources = false
             isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -55,30 +74,14 @@ android {
             signingConfig = signingConfigs.getByName("release")
         }
         
-        staging {
-            initWith(release)
+        create("staging") {
+            initWith(getByName("release"))
             applicationIdSuffix = ".staging"
             versionNameSuffix = "-staging"
             isDebuggable = true
             isMinifyEnabled = false
             buildConfigField("boolean", "DEBUG_MODE", "true")
             buildConfigField("String", "BUILD_TYPE", "\"staging\"")
-        }
-    }
-    
-    signingConfigs {
-        create("release") {
-            // Signing configuration will be loaded from keystore.properties
-            val keystorePropertiesFile = rootProject.file("keystore.properties")
-            if (keystorePropertiesFile.exists()) {
-                val keystoreProperties = java.util.Properties()
-                keystoreProperties.load(java.io.FileInputStream(keystorePropertiesFile))
-                
-                keyAlias = keystoreProperties["keyAlias"] as String
-                keyPassword = keystoreProperties["keyPassword"] as String
-                storeFile = file(keystoreProperties["storeFile"] as String)
-                storePassword = keystoreProperties["storePassword"] as String
-            }
         }
     }
     
@@ -149,11 +152,11 @@ dependencies {
     // Coroutines
     implementation(libs.coroutines.android)
 
-    // Production dependencies
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.crashlytics)
-    implementation(libs.firebase.analytics)
-    implementation(libs.firebase.performance)
+    // Production dependencies (commented out for basic build)
+    // implementation(platform(libs.firebase.bom))
+    // implementation(libs.firebase.crashlytics)
+    // implementation(libs.firebase.analytics)
+    // implementation(libs.firebase.performance)
     implementation(libs.security.crypto)
     
     // Debug only - LeakCanary for memory leak detection

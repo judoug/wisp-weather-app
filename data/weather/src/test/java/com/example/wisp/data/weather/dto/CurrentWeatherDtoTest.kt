@@ -53,3 +53,4 @@ class CurrentWeatherDtoTest {
         assertEquals(200, dto.responseCode)
     }
 }
+

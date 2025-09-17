@@ -60,3 +60,4 @@ interface OpenWeatherService {
         @Query("limit") limit: Int = 5
     ): List<PlaceSearchDto>
 }
+

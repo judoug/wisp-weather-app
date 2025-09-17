@@ -175,3 +175,4 @@ class WeatherMapperTest {
         assert(weatherBundle.daily.isNotEmpty())
     }
 }
+

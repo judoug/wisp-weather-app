@@ -99,3 +99,4 @@ data class CityDto(
     @SerialName("sunset")
     val sunset: Long
 )
+

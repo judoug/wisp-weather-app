@@ -49,3 +49,4 @@ class PlaceSearchDtoTest {
         assertEquals("Minnesota", thirdPlace.state)
     }
 }
+

@@ -27,3 +27,4 @@ data class PlaceSearchDto(
     @SerialName("state")
     val state: String? = null
 )
+

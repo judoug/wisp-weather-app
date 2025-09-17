@@ -120,3 +120,4 @@ data class SystemDto(
     @SerialName("sunset")
     val sunset: Long
 )
+

@@ -44,6 +44,10 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
+    // Location Services
+    implementation("com.google.android.gms:play-services-location:21.0.1")
+    implementation("androidx.core:core-ktx:1.12.0")
+
     // Network
     implementation(libs.retrofit)
     implementation(libs.retrofit.kotlinx.serialization)
@@ -53,10 +57,16 @@ dependencies {
     // Coroutines
     implementation(libs.coroutines.core)
     implementation(libs.coroutines.android)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
 
     // Testing
     testImplementation(libs.junit)
     testImplementation(libs.mockk)
     testImplementation(libs.coroutines.test)
+    testImplementation("org.jetbrains.kotlin:kotlin-test:1.9.22")
+    testImplementation("org.mockito:mockito-core:5.1.1")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.1.1")
+    testImplementation("org.robolectric:robolectric:4.10.3")
+    testImplementation("androidx.test:core:1.5.0")
 }
 

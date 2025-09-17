@@ -95,3 +95,4 @@ object WeatherModule {
         return openWeatherProvider
     }
 }
+

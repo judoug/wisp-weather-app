@@ -1,6 +1,6 @@
 # Wisp Weather App - Project Status
 
-## Current Progress: Prompts 1, 2, 3, 4 & 5 Complete ✅
+## Current Progress: Prompts 1, 2, 3, 4, 5 & 6 Complete ✅
 
 ### ✅ Prompt 1 - Project Bootstrap (COMPLETED)
 - **Multi-module Gradle setup** with version catalogs
@@ -43,7 +43,8 @@
 - ✅ **Initial commit pushed** (59 files, 2,793 lines of code)
 - ✅ **Prompt 3 commit pushed** (16 new files, 1,363 lines added)
 - ✅ **Prompt 4 commit pushed** (location services implementation)
-- ✅ **Prompt 5 commit ready** (database layer implementation)
+- ✅ **Prompt 5 commit pushed** (database layer implementation)
+- ✅ **Prompt 6 commit ready** (data integration layer implementation)
 - ✅ **Public repository** with comprehensive description
 - ✅ **Main branch** set as default and tracking
 - ✅ **Security**: API key in `local.properties` NOT committed (protected by `.gitignore`)
@@ -91,12 +92,15 @@ design/
     ├── Theme.kt (Material 3 with dynamic colors)
     └── Type.kt (typography)
 
-data/weather/ (✅ COMPLETE - Weather API client implemented)
+data/weather/ (✅ COMPLETE - Weather API client + Data Integration implemented)
 ├── src/main/java/com/example/wisp/data/weather/
 │   ├── dto/ (CurrentWeatherDto, ForecastDto, PlaceSearchDto)
 │   ├── service/ (OpenWeatherService, OpenWeatherProvider, ApiKeyInterceptor)
 │   ├── mapper/ (WeatherMapper)
-│   └── di/ (WeatherModule)
+│   ├── repository/ (WeatherDataRepository - main integration layer)
+│   ├── network/ (NetworkConnectivityManager - network status monitoring)
+│   ├── sync/ (WeatherDataSyncService - background synchronization)
+│   └── di/ (WeatherModule - updated with integration dependencies)
 └── src/test/ (5 test files + 3 JSON fixtures)
 
 data/location/ (✅ COMPLETE - Location services implemented)
@@ -143,14 +147,27 @@ data/db/ (✅ COMPLETE - Database layer implemented)
 - **Reactive Updates**: Flow-based data streams for reactive UI updates
 - **Build Integration**: Database module builds successfully and integrates with project
 
-## Next Steps: Prompt 6 - Data Integration Layer
+### ✅ Prompt 6 - Data Integration Layer (COMPLETED)
+- **WeatherDataRepository**: Main integration layer connecting weather API client with database repository
+- **NetworkConnectivityManager**: Real-time network status monitoring with Flow-based connectivity updates
+- **WeatherDataSyncService**: Background data synchronization with intelligent scheduling and retry logic
+- **Intelligent Caching**: 15-minute TTL with database persistence and automatic cache validation
+- **Offline Support**: Graceful fallback to cached data when network is unavailable
+- **Data Synchronization**: Fresh API data automatically cached to database with background sync
+- **Error Handling**: Comprehensive error handling for network and database failures with fallback strategies
+- **Performance Optimization**: Reduced API calls through smart caching and background synchronization
+- **Integration**: Seamless connection between weather API and database with reactive data streams
+- **Dependency Injection**: Updated Hilt modules for proper integration layer configuration
+- **Build Integration**: Full project builds successfully with complete data integration layer
+
+## Next Steps: Prompt 7 - UI Implementation with ViewModels
 **What to implement next:**
-1. **Weather Data Integration**: Connect weather API client with database repository
-2. **Caching Implementation**: Implement intelligent caching with database persistence
-3. **Offline Support**: Handle offline scenarios with cached data
-4. **Data Synchronization**: Sync fresh data from API with local database
-5. **Error Handling**: Comprehensive error handling for network and database failures
-6. **Performance Optimization**: Optimize data flow and reduce API calls
+1. **ViewModel Implementation**: Create ViewModels for each screen (Home, Locations, Search, Settings)
+2. **State Management**: Implement proper state management with StateFlow/Flow
+3. **UI State Classes**: Create sealed classes for loading, success, and error states
+4. **User Interactions**: Handle user actions like refresh, add place, remove place
+5. **Navigation Integration**: Connect ViewModels with navigation and screen transitions
+6. **Error Handling**: Implement user-friendly error messages and retry mechanisms
 
 ## Critical Configuration Notes
 - **API Key**: Already configured in `local.properties` as `OPENWEATHER_API_KEY=3e54101974619d8e984be198561efcc5`
@@ -163,7 +180,7 @@ data/db/ (✅ COMPLETE - Database layer implemented)
 - **Celsius primary**: All temperature models store Celsius, compute Fahrenheit
 - **Serialization**: Using kotlinx.serialization for all domain models
 - **Error handling**: Domain exceptions for different failure scenarios
-- **Caching strategy**: 15-minute TTL planned (to be implemented in Prompt 6)
+- **Caching strategy**: 15-minute TTL implemented in Prompt 6
 - **Place limit**: Maximum 10 saved places (enforced in domain layer)
 
 ## Dependencies Already Configured
@@ -198,7 +215,7 @@ data/db/ (✅ COMPLETE - Database layer implemented)
 2. **Navigate to project**: `cd wisp-weather-app`
 3. **Verify build**: `./gradlew build`
 4. **Read this file**: `PROJECT_STATUS.md` for full context
-5. **Start Prompt 6**: Data integration layer connecting API client with database
+5. **Start Prompt 7**: UI implementation with ViewModels and state management
 
 ## Environment Setup
 - **Java**: JDK 17 configured (`/opt/homebrew/opt/openjdk@17/`)

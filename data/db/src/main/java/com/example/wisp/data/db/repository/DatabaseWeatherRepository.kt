@@ -38,7 +38,7 @@ class DatabaseWeatherRepository @Inject constructor(
         if (!forceRefresh) {
             val cachedTimestamp = weatherDao.getWeatherCacheTimestamp(place.id)
             if (cachedTimestamp != null && isCacheValid(cachedTimestamp)) {
-                val cachedWeather = getCachedWeather(place.id)
+                val cachedWeather = getCachedWeatherInternal(place.id)
                 if (cachedWeather != null) {
                     return cachedWeather
                 }
@@ -112,22 +112,6 @@ class DatabaseWeatherRepository @Inject constructor(
         weatherDao.insertWeatherDaily(dailyEntities)
     }
     
-    /**
-     * Gets cached weather data for a place.
-     */
-    private suspend fun getCachedWeather(placeId: String): WeatherBundle? {
-        val nowEntity = weatherDao.getWeatherNow(placeId) ?: return null
-        val hourlyEntities = weatherDao.getWeatherHourly(placeId)
-        val dailyEntities = weatherDao.getWeatherDaily(placeId)
-        val placeEntity = placeDao.getPlaceById(placeId) ?: return null
-        
-        return WeatherBundle(
-            now = WeatherMapper.toDomain(nowEntity),
-            hourly = WeatherMapper.toDomainHourlyList(hourlyEntities),
-            daily = WeatherMapper.toDomainDailyList(dailyEntities),
-            place = PlaceMapper.toDomain(placeEntity)
-        )
-    }
     
     /**
      * Checks if cached data is still valid based on TTL.
@@ -166,5 +150,36 @@ class DatabaseWeatherRepository @Inject constructor(
                 null
             }
         }
+    }
+    
+    /**
+     * Gets the cache timestamp for weather data of a specific place.
+     */
+    suspend fun getCacheTimestamp(placeId: String): Long? {
+        return weatherDao.getWeatherCacheTimestamp(placeId)
+    }
+    
+    /**
+     * Gets cached weather data for a place (public method for external access).
+     */
+    suspend fun getCachedWeather(placeId: String): WeatherBundle? {
+        return getCachedWeatherInternal(placeId)
+    }
+    
+    /**
+     * Internal method to get cached weather data for a place.
+     */
+    private suspend fun getCachedWeatherInternal(placeId: String): WeatherBundle? {
+        val nowEntity = weatherDao.getWeatherNow(placeId) ?: return null
+        val hourlyEntities = weatherDao.getWeatherHourly(placeId)
+        val dailyEntities = weatherDao.getWeatherDaily(placeId)
+        val placeEntity = placeDao.getPlaceById(placeId) ?: return null
+        
+        return WeatherBundle(
+            now = WeatherMapper.toDomain(nowEntity),
+            hourly = WeatherMapper.toDomainHourlyList(hourlyEntities),
+            daily = WeatherMapper.toDomainDailyList(dailyEntities),
+            place = PlaceMapper.toDomain(placeEntity)
+        )
     }
 }

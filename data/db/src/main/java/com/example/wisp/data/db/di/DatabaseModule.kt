@@ -5,7 +5,6 @@ import com.example.wisp.data.db.WispDatabase
 import com.example.wisp.data.db.dao.PlaceDao
 import com.example.wisp.data.db.dao.WeatherDao
 import com.example.wisp.data.db.repository.DatabaseWeatherRepository
-import com.example.wisp.domain.repository.WeatherRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,9 +37,9 @@ object DatabaseModule {
     
     @Provides
     @Singleton
-    fun provideWeatherRepository(
+    fun provideDatabaseWeatherRepository(
         database: WispDatabase
-    ): WeatherRepository {
+    ): DatabaseWeatherRepository {
         return DatabaseWeatherRepository(database)
     }
 }

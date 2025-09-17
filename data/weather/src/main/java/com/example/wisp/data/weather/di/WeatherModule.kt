@@ -1,13 +1,19 @@
 package com.example.wisp.data.weather.di
 
+import com.example.wisp.data.db.repository.DatabaseWeatherRepository
+import com.example.wisp.data.weather.network.NetworkConnectivityManager
+import com.example.wisp.data.weather.repository.WeatherDataRepository
 import com.example.wisp.data.weather.service.ApiKeyInterceptor
 import com.example.wisp.data.weather.service.OpenWeatherProvider
 import com.example.wisp.data.weather.service.OpenWeatherService
+import com.example.wisp.data.weather.sync.WeatherDataSyncService
 import com.example.wisp.domain.provider.WeatherProvider
+import com.example.wisp.domain.repository.WeatherRepository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -93,6 +99,32 @@ object WeatherModule {
         openWeatherProvider: OpenWeatherProvider
     ): WeatherProvider {
         return openWeatherProvider
+    }
+    
+    @Provides
+    @Singleton
+    fun provideNetworkConnectivityManager(
+        @ApplicationContext context: android.content.Context
+    ): NetworkConnectivityManager {
+        return NetworkConnectivityManager(context)
+    }
+    
+    @Provides
+    @Singleton
+    fun provideWeatherDataSyncService(
+        weatherDataRepository: WeatherDataRepository,
+        networkConnectivityManager: NetworkConnectivityManager,
+        databaseRepository: DatabaseWeatherRepository
+    ): WeatherDataSyncService {
+        return WeatherDataSyncService(weatherDataRepository, networkConnectivityManager, databaseRepository)
+    }
+    
+    @Provides
+    @Singleton
+    fun provideWeatherRepository(
+        weatherDataRepository: WeatherDataRepository
+    ): WeatherRepository {
+        return weatherDataRepository
     }
 }
 

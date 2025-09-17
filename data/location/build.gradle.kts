@@ -10,6 +10,17 @@ android {
     namespace = "com.example.wisp.data.location"
     compileSdk = 34
 
+    flavorDimensions += "platform"
+    productFlavors {
+        create("android") {
+            dimension = "platform"
+        }
+        
+        create("quest") {
+            dimension = "platform"
+        }
+    }
+
     defaultConfig {
         minSdk = 24
 
@@ -53,20 +64,20 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
-    // Location Services
-    implementation("com.google.android.gms:play-services-location:21.0.1")
+    // Android flavor dependencies
+    "androidImplementation"("com.google.android.gms:play-services-location:21.0.1")
+    "androidImplementation"("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
+    
+    // Quest flavor dependencies (IP geolocation)
+    "questImplementation"(libs.retrofit)
+    "questImplementation"(libs.retrofit.kotlinx.serialization)
+    "questImplementation"(libs.okhttp)
+    "questImplementation"(libs.kotlinx.serialization.json)
+
+    // Common dependencies
     implementation("androidx.core:core-ktx:1.12.0")
-
-    // Network
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.kotlinx.serialization)
-    implementation(libs.okhttp)
-    implementation(libs.kotlinx.serialization.json)
-
-    // Coroutines
     implementation(libs.coroutines.core)
     implementation(libs.coroutines.android)
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
 
     // Testing
     testImplementation(libs.junit)

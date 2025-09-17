@@ -49,6 +49,33 @@ android {
         }
     }
     
+    flavorDimensions += "platform"
+    productFlavors {
+        create("android") {
+            dimension = "platform"
+            buildConfigField("String", "PLATFORM", "\"android\"")
+        }
+        
+        create("quest") {
+            dimension = "platform"
+            applicationIdSuffix = ".quest"
+            versionNameSuffix = "-quest"
+            buildConfigField("String", "PLATFORM", "\"quest\"")
+            
+            // Quest-specific build configuration
+            buildTypes {
+                release {
+                    isMinifyEnabled = true
+                    isShrinkResources = true
+                    proguardFiles(
+                        getDefaultProguardFile("proguard-android-optimize.txt"),
+                        "proguard-quest.pro"
+                    )
+                }
+            }
+        }
+    }
+
     buildTypes {
         debug {
             applicationIdSuffix = ".debug"
@@ -61,7 +88,7 @@ android {
         
         release {
             isMinifyEnabled = true
-            isShrinkResources = false
+            isShrinkResources = true
             isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

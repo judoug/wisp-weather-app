@@ -1,0 +1,35 @@
+[
+  {
+    "name": "New York",
+    "local_names": {
+      "en": "New York",
+      "es": "Nueva York",
+      "fr": "New York"
+    },
+    "lat": 40.7128,
+    "lon": -74.0060,
+    "country": "US",
+    "state": "New York"
+  },
+  {
+    "name": "New York",
+    "local_names": {
+      "en": "New York",
+      "es": "Nueva York"
+    },
+    "lat": 40.7589,
+    "lon": -73.9851,
+    "country": "US",
+    "state": "New York"
+  },
+  {
+    "name": "New York Mills",
+    "local_names": {
+      "en": "New York Mills"
+    },
+    "lat": 46.5181,
+    "lon": -95.3761,
+    "country": "US",
+    "state": "Minnesota"
+  }
+]

@@ -4,6 +4,11 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.kapt)
+    
+    // Production plugins
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.crashlytics)
+    alias(libs.plugins.firebase.perf)
 }
 
 android {
@@ -26,12 +31,54 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
+            applicationIdSuffix = ".debug"
+            versionNameSuffix = "-debug"
+            isDebuggable = true
             isMinifyEnabled = false
+            buildConfigField("boolean", "DEBUG_MODE", "true")
+            buildConfigField("String", "BUILD_TYPE", "\"debug\"")
+        }
+        
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("boolean", "DEBUG_MODE", "false")
+            buildConfigField("String", "BUILD_TYPE", "\"release\"")
+            
+            // Signing configuration will be added via signing configs
+            signingConfig = signingConfigs.getByName("release")
+        }
+        
+        staging {
+            initWith(release)
+            applicationIdSuffix = ".staging"
+            versionNameSuffix = "-staging"
+            isDebuggable = true
+            isMinifyEnabled = false
+            buildConfigField("boolean", "DEBUG_MODE", "true")
+            buildConfigField("String", "BUILD_TYPE", "\"staging\"")
+        }
+    }
+    
+    signingConfigs {
+        create("release") {
+            // Signing configuration will be loaded from keystore.properties
+            val keystorePropertiesFile = rootProject.file("keystore.properties")
+            if (keystorePropertiesFile.exists()) {
+                val keystoreProperties = java.util.Properties()
+                keystoreProperties.load(java.io.FileInputStream(keystorePropertiesFile))
+                
+                keyAlias = keystoreProperties["keyAlias"] as String
+                keyPassword = keystoreProperties["keyPassword"] as String
+                storeFile = file(keystoreProperties["storeFile"] as String)
+                storePassword = keystoreProperties["storePassword"] as String
+            }
         }
     }
     
@@ -101,6 +148,16 @@ dependencies {
 
     // Coroutines
     implementation(libs.coroutines.android)
+
+    // Production dependencies
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.performance)
+    implementation(libs.security.crypto)
+    
+    // Debug only - LeakCanary for memory leak detection
+    debugImplementation(libs.leakcanary)
 
     // Testing
     testImplementation(libs.junit)

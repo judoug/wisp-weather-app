@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Production Configuration -->
+    
+    <!-- App Information -->
+    <string name="app_name">Wisp Weather</string>
+    <string name="app_description">Beautiful weather app with accurate forecasts and intuitive design</string>
+    <string name="app_version">1.0.0</string>
+    
+    <!-- API Configuration -->
+    <string name="openweather_base_url">https://api.openweathermap.org/data/2.5/</string>
+    <string name="openweather_icon_base_url">https://openweathermap.org/img/wn/</string>
+    
+    <!-- Performance Settings -->
+    <integer name="weather_cache_duration_minutes">15</integer>
+    <integer name="location_cache_duration_minutes">5</integer>
+    <integer name="max_saved_places">10</integer>
+    <integer name="search_debounce_delay_ms">500</integer>
+    
+    <!-- UI Settings -->
+    <integer name="animation_duration_ms">300</integer>
+    <integer name="pull_to_refresh_threshold">100</integer>
+    <integer name="skeleton_animation_duration_ms">1000</integer>
+    
+    <!-- Security Settings -->
+    <bool name="enable_encryption">true</bool>
+    <bool name="enable_analytics">true</bool>
+    <bool name="enable_crashlytics">true</bool>
+    <bool name="enable_performance_monitoring">true</bool>
+    
+    <!-- Feature Flags -->
+    <bool name="feature_dark_mode">true</bool>
+    <bool name="feature_notifications">true</bool>
+    <bool name="feature_widgets">false</bool>
+    <bool name="feature_offline_mode">true</bool>
+    <bool name="feature_accessibility">true</bool>
+    
+    <!-- Analytics Events -->
+    <string name="analytics_event_app_launch">app_launch</string>
+    <string name="analytics_event_weather_fetch">weather_fetch</string>
+    <string name="analytics_event_place_search">place_search</string>
+    <string name="analytics_event_place_added">place_added</string>
+    <string name="analytics_event_place_removed">place_removed</string>
+    <string name="analytics_event_settings_change">settings_change</string>
+    <string name="analytics_event_feedback_submitted">feedback_submitted</string>
+    
+    <!-- Error Messages -->
+    <string name="error_network_unavailable">Network connection unavailable. Please check your internet connection.</string>
+    <string name="error_location_unavailable">Unable to get your location. Please check location permissions.</string>
+    <string name="error_weather_data_unavailable">Weather data is currently unavailable. Please try again later.</string>
+    <string name="error_place_not_found">Location not found. Please try a different search term.</string>
+    <string name="error_max_places_reached">Maximum number of saved places reached. Please remove a place to add a new one.</string>
+    
+    <!-- Success Messages -->
+    <string name="success_place_added">Location added successfully</string>
+    <string name="success_place_removed">Location removed successfully</string>
+    <string name="success_settings_saved">Settings saved successfully</string>
+    <string name="success_feedback_submitted">Thank you for your feedback!</string>
+    
+    <!-- Accessibility -->
+    <string name="accessibility_weather_icon">Weather icon</string>
+    <string name="accessibility_temperature">Temperature</string>
+    <string name="accessibility_humidity">Humidity</string>
+    <string name="accessibility_wind_speed">Wind speed</string>
+    <string name="accessibility_weather_description">Weather description</string>
+    <string name="accessibility_add_place">Add new location</string>
+    <string name="accessibility_remove_place">Remove location</string>
+    <string name="accessibility_refresh_weather">Refresh weather data</string>
+    <string name="accessibility_search_places">Search for places</string>
+    <string name="accessibility_settings">Settings</string>
+    
+    <!-- Privacy Policy and Terms -->
+    <string name="privacy_policy_url">https://wispweather.app/privacy</string>
+    <string name="terms_of_service_url">https://wispweather.app/terms</string>
+    <string name="support_email">support@wispweather.app</string>
+    
+    <!-- App Store Information -->
+    <string name="app_store_category">WEATHER</string>
+    <string name="app_store_keywords">weather,forecast,temperature,rain,snow,sunny,cloudy</string>
+    <string name="app_store_content_rating">EVERYONE</string>
+    
+    <!-- Performance Thresholds -->
+    <integer name="max_startup_time_ms">3000</integer>
+    <integer name="max_weather_fetch_time_ms">5000</integer>
+    <integer name="max_memory_usage_mb">100</integer>
+    <integer name="max_cpu_usage_percent">80</integer>
+    
+    <!-- Debug Settings (disabled in production) -->
+    <bool name="debug_logging">false</bool>
+    <bool name="debug_analytics">false</bool>
+    <bool name="debug_performance">false</bool>
+    <bool name="debug_network">false</bool>
+</resources>

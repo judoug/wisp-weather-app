@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Debug Configuration -->
+    
+    <!-- Debug Settings (enabled in debug builds) -->
+    <bool name="debug_logging">true</bool>
+    <bool name="debug_analytics">true</bool>
+    <bool name="debug_performance">true</bool>
+    <bool name="debug_network">true</bool>
+    
+    <!-- Debug API Configuration -->
+    <string name="debug_api_base_url">https://api.openweathermap.org/data/2.5/</string>
+    
+    <!-- Debug Performance Settings -->
+    <integer name="debug_weather_cache_duration_minutes">1</integer>
+    <integer name="debug_location_cache_duration_minutes">1</integer>
+    
+    <!-- Debug UI Settings -->
+    <integer name="debug_animation_duration_ms">100</integer>
+    <integer name="debug_skeleton_animation_duration_ms">500</integer>
+    
+    <!-- Debug Security Settings -->
+    <bool name="debug_enable_encryption">false</bool>
+    <bool name="debug_enable_analytics">false</bool>
+    <bool name="debug_enable_crashlytics">false</bool>
+    <bool name="debug_enable_performance_monitoring">true</bool>
+    
+    <!-- Debug Feature Flags -->
+    <bool name="debug_feature_dark_mode">true</bool>
+    <bool name="debug_feature_notifications">false</bool>
+    <bool name="debug_feature_widgets">false</bool>
+    <bool name="debug_feature_offline_mode">true</bool>
+    <bool name="debug_feature_accessibility">true</bool>
+    
+    <!-- Debug Error Messages -->
+    <string name="debug_error_network_unavailable">[DEBUG] Network connection unavailable</string>
+    <string name="debug_error_location_unavailable">[DEBUG] Location unavailable</string>
+    <string name="debug_error_weather_data_unavailable">[DEBUG] Weather data unavailable</string>
+    
+    <!-- Debug Performance Thresholds -->
+    <integer name="debug_max_startup_time_ms">5000</integer>
+    <integer name="debug_max_weather_fetch_time_ms">10000</integer>
+    <integer name="debug_max_memory_usage_mb">200</integer>
+    <integer name="debug_max_cpu_usage_percent">90</integer>
+</resources>

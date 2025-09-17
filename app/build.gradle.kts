@@ -61,18 +61,6 @@ android {
             applicationIdSuffix = ".quest"
             versionNameSuffix = "-quest"
             buildConfigField("String", "PLATFORM", "\"quest\"")
-            
-            // Quest-specific build configuration
-            buildTypes {
-                release {
-                    isMinifyEnabled = true
-                    isShrinkResources = true
-                    proguardFiles(
-                        getDefaultProguardFile("proguard-android-optimize.txt"),
-                        "proguard-quest.pro"
-                    )
-                }
-            }
         }
     }
 
@@ -88,7 +76,7 @@ android {
         
         release {
             isMinifyEnabled = true
-            isShrinkResources = true
+            isShrinkResources = false
             isDebuggable = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

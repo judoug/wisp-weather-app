@@ -36,14 +36,14 @@ fun QuestNavigation(
     ) {
         composable("home") {
             HomeScreen(
-                onNavigateToSettings = {
-                    navController.navigate("settings")
+                onNavigateToLocations = {
+                    navController.navigate("locations")
                 },
                 onNavigateToSearch = {
                     navController.navigate("search")
                 },
-                onNavigateToLocations = {
-                    navController.navigate("locations")
+                onNavigateToSettings = {
+                    navController.navigate("settings")
                 }
             )
         }
@@ -63,9 +63,6 @@ fun QuestNavigation(
             SearchScreen(
                 onNavigateBack = {
                     navController.popBackStack()
-                },
-                onNavigateToSettings = {
-                    navController.navigate("settings")
                 }
             )
         }
@@ -75,8 +72,8 @@ fun QuestNavigation(
                 onNavigateBack = {
                     navController.popBackStack()
                 },
-                onNavigateToSettings = {
-                    navController.navigate("settings")
+                onNavigateToSearch = {
+                    navController.navigate("search")
                 }
             )
         }

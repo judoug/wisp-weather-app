@@ -34,22 +34,6 @@ abstract class QuestLocationModule {
     ): LocationProvider
 
     companion object {
-        /**
-         * Provides ManualLocationProvider instance.
-         */
-        @Provides
-        @Singleton
-        fun provideManualLocationProvider(
-            manualLocationProvider: ManualLocationProvider
-        ): ManualLocationProvider = manualLocationProvider
-
-        /**
-         * Provides IpGeoLocationProvider instance.
-         */
-        @Provides
-        @Singleton
-        fun provideIpGeoLocationProvider(
-            ipGeoLocationProvider: IpGeoLocationProvider
-        ): IpGeoLocationProvider = ipGeoLocationProvider
+        // No additional providers needed - Hilt will inject the classes directly
     }
 }

@@ -3,6 +3,7 @@ package com.example.wisp.ui.quest
 import androidx.compose.foundation.focusable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -79,7 +80,7 @@ private fun DrawScope.drawFocusIndicator(
     strokeWidth: Float
 ) {
     val strokeWidthPx = strokeWidth / 2f
-    val rect = size.toRect()
+    val rect = androidx.compose.ui.geometry.Rect(0f, 0f, size.width, size.height)
     
     // Draw focus border
     drawLine(

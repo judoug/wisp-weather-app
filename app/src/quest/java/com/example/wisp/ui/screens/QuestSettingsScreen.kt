@@ -33,6 +33,7 @@ import com.example.wisp.ui.quest.questButton
 import com.example.wisp.ui.quest.questCard
 import com.example.wisp.ui.quest.questFocusable
 import com.example.wisp.ui.quest.questTouchTarget
+import com.example.wisp.ui.quest.QuestUiUtils
 
 /**
  * Quest-specific settings screen with VR/AR optimizations.

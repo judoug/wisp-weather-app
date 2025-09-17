@@ -34,13 +34,7 @@ object WeatherModule {
     
     private const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
     
-    @Provides
-    @Singleton
-    @Named("openweather_api_key")
-    fun provideApiKey(): String {
-        // This will be injected from BuildConfig in the app module
-        return "3e54101974619d8e984be198561efcc5"
-    }
+    // API key is now provided by AppModule from BuildConfig
     
     @Provides
     @Singleton

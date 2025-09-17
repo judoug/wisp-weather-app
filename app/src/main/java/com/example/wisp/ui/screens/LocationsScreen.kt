@@ -43,6 +43,7 @@ import com.example.wisp.design.theme.WispTheme
 import com.example.wisp.domain.model.Place
 import com.example.wisp.ui.components.ErrorContent
 import com.example.wisp.ui.components.LoadingContent
+import com.example.wisp.ui.components.SwipeableLocationItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -163,12 +164,10 @@ fun LocationsScreen(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(uiState.places) { place ->
-                        LocationItem(
+                        SwipeableLocationItem(
                             place = place,
-                            isPrimary = place.id == "primary",
-                            isDeleting = uiState.isDeletingPlace && uiState.deletingPlaceId == place.id,
-                            onSetPrimary = { viewModel.setPrimaryPlace(place.id) },
-                            onDelete = { viewModel.removePlace(place.id) }
+                            onDelete = { viewModel.removePlace(place.id) },
+                            modifier = Modifier
                         )
                     }
                 }
@@ -177,79 +176,6 @@ fun LocationsScreen(
     }
 }
 
-@Composable
-private fun LocationItem(
-    place: Place,
-    isPrimary: Boolean,
-    isDeleting: Boolean,
-    onSetPrimary: () -> Unit,
-    onDelete: () -> Unit
-) {
-    Card(
-        modifier = Modifier.fillMaxSize(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxSize(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Column(modifier = Modifier.weight(1f)) {
-                    Text(
-                        text = place.name,
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = if (isPrimary) androidx.compose.ui.text.font.FontWeight.Bold else androidx.compose.ui.text.font.FontWeight.Normal
-                    )
-                    Text(
-                        text = "${place.lat}, ${place.lon}",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                    if (isPrimary) {
-                        Text(
-                            text = "Primary Location",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    }
-                }
-                
-                Row {
-                    if (!isPrimary) {
-                        IconButton(onClick = onSetPrimary) {
-                            Icon(
-                                Icons.Default.Star,
-                                contentDescription = "Set as Primary",
-                                tint = MaterialTheme.colorScheme.primary
-                            )
-                        }
-                    }
-                    
-                    IconButton(
-                        onClick = onDelete,
-                        enabled = !isDeleting
-                    ) {
-                        if (isDeleting) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(24.dp),
-                                strokeWidth = 2.dp
-                            )
-                        } else {
-                            Icon(
-                                Icons.Default.Delete,
-                                contentDescription = "Delete",
-                                tint = MaterialTheme.colorScheme.error
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
 
 @Preview(showBackground = true)
 @Composable

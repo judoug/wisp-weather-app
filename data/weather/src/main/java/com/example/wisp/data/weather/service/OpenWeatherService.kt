@@ -61,3 +61,4 @@ interface OpenWeatherService {
     ): List<PlaceSearchDto>
 }
 
+

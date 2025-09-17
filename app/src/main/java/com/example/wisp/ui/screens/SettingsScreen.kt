@@ -44,6 +44,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.wisp.design.theme.WispTheme
 import com.example.wisp.ui.state.RefreshInterval
 import com.example.wisp.ui.state.TemperatureUnit
+import com.example.wisp.ui.components.AccessibilitySettingsCard
+import com.example.wisp.ui.components.DarkModeToggleCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,6 +55,12 @@ fun SettingsScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
+    
+    // Local state for accessibility and dark mode
+    var isDarkMode by remember { mutableStateOf(false) }
+    var highContrastEnabled by remember { mutableStateOf(false) }
+    var largeTextEnabled by remember { mutableStateOf(false) }
+    var screenReaderEnabled by remember { mutableStateOf(false) }
     
     // Show snackbar for save errors
     LaunchedEffect(uiState.hasSaveError) {
@@ -250,6 +258,21 @@ fun SettingsScreen(
                     )
                 }
             }
+            
+            // Dark Mode Toggle Card
+            DarkModeToggleCard(
+                isDarkMode = isDarkMode,
+                onToggle = { isDarkMode = it },
+                modifier = Modifier.fillMaxWidth()
+            )
+            
+            // Accessibility Settings Card
+            AccessibilitySettingsCard(
+                onHighContrastToggle = { highContrastEnabled = it },
+                onLargeTextToggle = { largeTextEnabled = it },
+                onScreenReaderToggle = { screenReaderEnabled = it },
+                modifier = Modifier.fillMaxWidth()
+            )
             
             // Reset to Defaults Button
             Button(

@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.LocationOn
@@ -26,13 +28,17 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,6 +47,7 @@ import com.example.wisp.design.theme.WispTheme
 import com.example.wisp.ui.components.WeatherContent
 import com.example.wisp.ui.components.ErrorContent
 import com.example.wisp.ui.components.LoadingContent
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,6 +59,24 @@ fun HomeScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+    val listState = rememberLazyListState()
+    
+    val pullToRefreshState = rememberPullToRefreshState()
+    
+    // Handle pull to refresh
+    LaunchedEffect(pullToRefreshState.isRefreshing) {
+        if (pullToRefreshState.isRefreshing) {
+            viewModel.refreshWeather()
+        }
+    }
+    
+    // End refresh when loading completes
+    LaunchedEffect(uiState.isRefreshing) {
+        if (!uiState.isRefreshing && pullToRefreshState.isRefreshing) {
+            pullToRefreshState.endRefresh()
+        }
+    }
     
     // Show snackbar for errors
     LaunchedEffect(uiState.hasError) {
@@ -107,9 +132,10 @@ fun HomeScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .nestedScroll(pullToRefreshState.nestedScrollConnection)
         ) {
             when {
-                uiState.isLoading -> {
+                uiState.isLoading && !uiState.hasWeatherData -> {
                     LoadingContent(
                         message = "Loading weather data...",
                         modifier = Modifier.fillMaxSize()
@@ -124,12 +150,19 @@ fun HomeScreen(
                 }
                 uiState.hasWeatherData -> {
                     uiState.weatherData?.let { weatherBundle ->
-                        WeatherContent(
-                            weatherBundle = weatherBundle,
-                            isOffline = uiState.isOffline,
-                            lastRefreshTime = uiState.lastRefreshTime,
+                        LazyColumn(
+                            state = listState,
                             modifier = Modifier.fillMaxSize()
-                        )
+                        ) {
+                            item {
+                                WeatherContent(
+                                    weatherBundle = weatherBundle,
+                                    isOffline = uiState.isOffline,
+                                    lastRefreshTime = uiState.lastRefreshTime,
+                                    modifier = Modifier.fillMaxSize()
+                                )
+                            }
+                        }
                     }
                 }
                 else -> {
@@ -168,6 +201,12 @@ fun HomeScreen(
                     }
                 }
             }
+            
+            // Pull to refresh indicator
+            PullToRefreshContainer(
+                state = pullToRefreshState,
+                modifier = Modifier.align(Alignment.TopCenter)
+            )
         }
     }
 }

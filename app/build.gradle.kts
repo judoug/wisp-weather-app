@@ -85,6 +85,16 @@ dependencies {
     implementation(libs.accompanist.navigation.animation)
     implementation(libs.accompanist.permissions)
 
+    // Image loading
+    implementation(libs.coil.compose)
+
+    // Pull to refresh
+    implementation("androidx.compose.material:material:1.5.4")
+
+    // Advanced UI components
+    implementation("com.google.accompanist:accompanist-pager:0.32.0")
+    implementation("com.google.accompanist:accompanist-pager-indicators:0.32.0")
+
     // Lifecycle
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.lifecycle.runtime.compose)

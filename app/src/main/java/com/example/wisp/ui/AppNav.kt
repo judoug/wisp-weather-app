@@ -43,7 +43,8 @@ fun AppNav(
         ) {
             HomeScreen(
                 onNavigateToLocations = { navController.navigate("locations") },
-                onNavigateToSearch = { navController.navigate("search") }
+                onNavigateToSearch = { navController.navigate("search") },
+                onNavigateToSettings = { navController.navigate("settings") }
             )
         }
         
